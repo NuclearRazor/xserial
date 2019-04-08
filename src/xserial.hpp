@@ -29,10 +29,7 @@
 #ifndef COM_PORT_HPP_INCLUDED
 #define COM_PORT_HPP_INCLUDED
 
-#if defined(__MINGW32__) || defined(_WIN32)
 #include <windows.h>
-#endif
-
 #include <string>
 #include <vector>
 #include <sstream>
@@ -40,7 +37,8 @@
 //#define LINUX_SPECIFY_NAME_COM_PORT "ttyUSB"
 //#define LINUX_SPECIFY_NAME_COM_PORT "ttyACM"
 
-namespace xserial {
+namespace xserial 
+{
 
     /**@brief Класс для работы с COM портом.
         @version 1.0
@@ -94,12 +92,12 @@ namespace xserial {
         const char defaultDataBits = 8; ///< Количесвто бит данных по умолчанию
         const eMode defaultMode = COM_SYNCHRONOUS; ///< Настройка режима работы с портом по умолчанию
     private:
-        #if defined(__MINGW32__) || defined(_WIN32)
+        //#if defined(__MINGW32__) || defined(_WIN32)
         HANDLE hComPort = NULL;
         DCB	dcbComPort;
         COMMTIMEOUTS commTimeoutsComPort;
         COMMPROP commPropComPort;
-        #endif
+       //#endif
         #ifdef __linux
         int hComPort = 0;
             #ifndef LINUX_SPECIFY_NAME_COM_PORT
@@ -122,39 +120,39 @@ namespace xserial {
         */
         ComPort();
 
-        /**@brief Инициализация порта с настройкой номера порта
-        При инициализации класса будет октрыт указанный порт
-        со скоростью 9600, с 1-м стоп битом, без проверки четности и длиной
-        даных 8 бит.
-        @param[in] numComPort номер порта
-        */
-        ComPort(unsigned short numComPort);
+        ///**@brief Инициализация порта с настройкой номера порта
+        //При инициализации класса будет октрыт указанный порт
+        //со скоростью 9600, с 1-м стоп битом, без проверки четности и длиной
+        //даных 8 бит.
+        //@param[in] numComPort номер порта
+        //*/
+        ComPort(unsigned short numComPort) ;
 
-        /**@brief Инициализация порта с настройкой номера порта и его скорости
-        При инициализации класса будет октрыт указанный порт с указанной скоростью,
-        с 1-м стоп битом, без проверки четности и длиной данных 8 бит.
-        @param[in] numComPort номер порта
-        @param[in] baudRate скорость
-        */
+        ///**@brief Инициализация порта с настройкой номера порта и его скорости
+        //При инициализации класса будет октрыт указанный порт с указанной скоростью,
+        //с 1-м стоп битом, без проверки четности и длиной данных 8 бит.
+        //@param[in] numComPort номер порта
+        //@param[in] baudRate скорость
+        //*/
         ComPort(unsigned short numComPort, unsigned long baudRate);
 
-        /**@brief Инициализация порта с настройкой всех параметров
-        При инициализации класса будет октрыт указанный порт с настройкой всех параметров
-        @param[in] numComPort номер порта
-        @param[in] baudRate скорость
-        @param[in] parity настройка проверки четности
-        @param[in] dataBits количесвто бит данных
-        @param[in] stopBits настройка количесвта стоп битов
-        */
+        ///**@brief Инициализация порта с настройкой всех параметров
+        //При инициализации класса будет октрыт указанный порт с настройкой всех параметров
+        //@param[in] numComPort номер порта
+        //@param[in] baudRate скорость
+        //@param[in] parity настройка проверки четности
+        //@param[in] dataBits количесвто бит данных
+        //@param[in] stopBits настройка количесвта стоп битов
+        //*/
         ComPort(unsigned short numComPort, unsigned long baudRate, eParity parity, char dataBits, eStopBit stopBits);
 
-        /**@brief Инициализация первого доступного порта с настройкой всех параметров
-        При инициализации класса будет октрыт первый доступный порт с настройкой всех параметров
-        @param[in] baudRate скорость
-        @param[in] parity настройка проверки четности
-        @param[in] dataBits количесвто бит данных
-        @param[in] stopBits настройка количесвта стоп битов
-        */
+        ///**@brief Инициализация первого доступного порта с настройкой всех параметров
+        //При инициализации класса будет октрыт первый доступный порт с настройкой всех параметров
+        //@param[in] baudRate скорость
+        //@param[in] parity настройка проверки четности
+        //@param[in] dataBits количесвто бит данных
+        //@param[in] stopBits настройка количесвта стоп битов
+        //*/
         ComPort(unsigned long baudRate, eParity parity, char dataBits, eStopBit stopBits);
 
         ~ComPort();

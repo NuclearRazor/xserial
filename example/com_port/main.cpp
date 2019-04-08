@@ -1,15 +1,22 @@
 #include <iostream>
-#include "xserial.hpp"
-using namespace std;
+#include <helpers.cpp>
+#include <xserial.cpp>
 
-int main() {
+using namespace xserial;
+
+int main() 
+{
     // инициализируем доступный COM порт, без проверки бита четности, с 8-мью битами данных и одним стоп битом.
-    const int baudRate = 115200; // скорость порта
+    unsigned int baudRate = 9600; // скорость порта //14400
     const int dataBits = 8; // длина данных
-    xserial::ComPort serial(baudRate, xserial::ComPort::COM_PORT_NOPARITY, dataBits, xserial::ComPort::COM_PORT_ONESTOPBIT);
+
+    std::cout  << xserial::ComPort::COM_PORT_NOPARITY;
+    std::cout  << xserial::ComPort::COM_PORT_ONESTOPBIT;
+
+    xserial::ComPort serial(3);
 
     if (!serial.getStateComPort()) { // Если порт не открылся
-        cout << "Error: com port is not open!" << endl;
+        std::cout  << "\nError: com port is not open for baud rate: " << baudRate << std::endl;
         return 0;
     }
 
@@ -17,32 +24,35 @@ int main() {
     serial.printListSerialPorts();
 
     // получаем текст до символа \n
-    cout << "Test getLine()..." << endl;
+    std::cout  << "Test getLine()..." << std::endl;
     serial << "Test 1\n";
-    cout << serial.getLine() << endl;
+    std::cout  << serial.getLine() << std::endl;
 
     // проверяем функцию проверки количества принятых байт
-    cout << "Test bytesToRead()..." << endl;
+    std::cout  << "Test bytesToRead()..." << std::endl;
     serial.print("Test 2\n");
     int k = serial.bytesToRead();
-    cout << "bytes to read = " << k << endl;
-    while(k < 6) {
+    std::cout  << "bytes to read = " << k << std::endl;
+
+    while (k < 6) 
+    {
         k = serial.bytesToRead();
     }
-    cout << "bytes to read = " << k << endl;
+
+    std::cout  << "bytes to read = " << k << std::endl;
 
     // проверяем функцию чтения
     char data[512];
-    cout << "Test read()..." << endl;
+    std::cout  << "Test read()..." << std::endl;
     serial.read(data, 7);
-    cout << data << endl;
+    std::cout  << data << std::endl;
 
     // проверяем функцию чтения слова
     serial.print("Bla Bla Bla\n");
-    cout << "Test getWord(), print Bla Bla Bla" << endl;
-    cout << "Word 1: " << serial.getWord() << endl;
-    cout << "Word 2: " << serial.getWord() << endl;
-    cout << "Word 3: " << serial.getWord() << endl;
+    std::cout  << "Test getWord(), print Bla Bla Bla" << std::endl;
+    std::cout  << "Word 1: " << serial.getWord() << std::endl;
+    std::cout  << "Word 2: " << serial.getWord() << std::endl;
+    std::cout  << "Word 3: " << serial.getWord() << std::endl;
 
     return 0;
 }
